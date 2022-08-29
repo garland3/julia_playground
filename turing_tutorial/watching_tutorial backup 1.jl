@@ -38,6 +38,9 @@ begin
 	
 end
 
+# ╔═╡ 63a6be96-5b8d-4aa8-b13d-a8fa14bab280
+using CornerPlot
+
 # ╔═╡ 8f79bdd0-2621-11ed-1c1a-e95f2915602a
 # watching this guy. https://www.youtube.com/watch?v=CKSxxJ7RdAU&t=10s
 # Code is here
@@ -62,6 +65,9 @@ begin
 	b2 = Bernoulli(0.7)
 	# y = b*b2
 end
+
+# ╔═╡ 1b0cfbae-d773-4d65-b276-1790e230338e
+
 
 # ╔═╡ dfa1be06-2401-4dbe-8ead-80376cf2f810
 coin_flips = rand(b,100)
@@ -129,27 +135,40 @@ begin
 	summarystats(chain_coin_parallel)
 end
 
+# ╔═╡ 4e526c95-b9a0-4004-8600-984eb1c9b953
+# Wells data
+
 # ╔═╡ 3c1e6ec5-fe21-4b5d-a1e1-9eef7e0453b0
-# begin
-# 	# Logistic Regression
-# 	wells = CSV.read(download("https://github.com/storopoli/Turing-Workshop/blob/master/data/wells.csv?raw=true"), DataFrame);
-# 	X_wells = Matrix(select(wells, Not(:switch)));
-# 	y_wells = wells[:, :switch];
+begin
+	# Logistic Regression
+	wells = CSV.read(download("https://github.com/storopoli/Turing-Workshop/blob/master/data/wells.csv?raw=true"), DataFrame);
+	X_wells = Matrix(select(wells, Not(:switch)));
+	y_wells = wells[:, :switch];
+end
+
+# ╔═╡ 00dbca2e-a00a-43db-b215-d1e3d79a37d2
+# Plots(wells)
+# wells
+# scatter(wells)
+corner(wells)
+
+# ╔═╡ 503b98d1-34ca-4627-abdc-56670e531f3a
+# @df wells scatter(
+# 	:arsenic,
+# 	:dist,
+# 	group = :switch,
+# )
+
+# ╔═╡ f2d21735-e282-4883-b237-4c3451ea6c8e
+# with_terminal() do
+# 	@btime sample(logreg($X_wells, $y_wells), MH(), 100);
 # end
 
 # ╔═╡ e936ece1-ebf0-48ca-9676-9de00714c7f3
-begin
-	prior_chain_coin = sample(coin(coin_flips), Prior(), 1_000)
-	summarystats(prior_chain_coin)
-end
 
-# ╔═╡ bfa3563f-8deb-40d6-9fbf-4189197ff2dc
-begin
-	missing_data = Vector{Missing}(missing, length(coin_flips)); # vector of `missing`
-	model_predict = coin(missing_data); # instantiate the "predictive model"
-	prior_check = predict(model_predict, prior_chain_coin);
-	describe(DataFrame(summarystats(prior_check)))
-end
+
+# ╔═╡ 5ed6f1fb-2c70-4f6f-af8f-f43a7a0f9607
+
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -162,6 +181,7 @@ Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 LaTeXStrings = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
 LazyArrays = "5078a376-72f3-5289-bfd5-ec5146d43c02"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+PairPlots = "43a3c2be-4208-490b-832a-a21dcd55d7da"
 Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
@@ -179,6 +199,7 @@ DifferentialEquations = "~7.2.0"
 Distributions = "~0.25.68"
 LaTeXStrings = "~1.3.0"
 LazyArrays = "~0.22.11"
+PairPlots = "~0.1.0"
 Plots = "~1.31.7"
 PlutoUI = "~0.7.39"
 StatsBase = "~0.33.21"
@@ -192,7 +213,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.8.0"
 manifest_format = "2.0"
-project_hash = "9fe4786152ecb781097c0f99b02f029b9e30238f"
+project_hash = "7930e8dc43d6afd7b4132796777f28699703b698"
 
 [[deps.AbstractFFTs]]
 deps = ["ChainRulesCore", "LinearAlgebra"]
@@ -591,9 +612,9 @@ version = "0.4.0"
 
 [[deps.DiffEqBase]]
 deps = ["ArrayInterfaceCore", "ChainRulesCore", "DataStructures", "Distributions", "DocStringExtensions", "FastBroadcast", "ForwardDiff", "FunctionWrappers", "FunctionWrappersWrappers", "LinearAlgebra", "Logging", "MuladdMacro", "NonlinearSolve", "Parameters", "Printf", "RecursiveArrayTools", "Reexport", "Requires", "SciMLBase", "Setfield", "SparseArrays", "Static", "StaticArrays", "Statistics", "ZygoteRules"]
-git-tree-sha1 = "665832fd81cd961aad28fa7009d4aaa23a07db57"
+git-tree-sha1 = "4d5f6b613cad84aecdc482e66c0c229c0460954f"
 uuid = "2b5f629d-d688-5b77-993f-72d75c75574e"
-version = "6.98.2"
+version = "6.98.1"
 
 [[deps.DiffEqCallbacks]]
 deps = ["DataStructures", "DiffEqBase", "ForwardDiff", "LinearAlgebra", "Markdown", "NLsolve", "Parameters", "RecipesBase", "RecursiveArrayTools", "SciMLBase", "StaticArrays"]
@@ -1215,9 +1236,9 @@ uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[deps.LinearSolve]]
 deps = ["ArrayInterfaceCore", "DocStringExtensions", "FastLapackInterface", "GPUArraysCore", "IterativeSolvers", "KLU", "Krylov", "KrylovKit", "LinearAlgebra", "RecursiveFactorization", "Reexport", "SciMLBase", "Setfield", "SparseArrays", "SuiteSparse", "UnPack"]
-git-tree-sha1 = "af8c2f07401cb3c39ad05542adf053314ea37ec8"
+git-tree-sha1 = "f5e87a367eabdbfc77dc9878d4575f8584cea405"
 uuid = "7ed4a6bd-45f5-4d41-b270-4a48e9bafcae"
-version = "1.25.0"
+version = "1.23.4"
 
 [[deps.LogDensityProblems]]
 deps = ["ArgCheck", "DiffResults", "DocStringExtensions", "Random", "Requires", "TransformVariables", "UnPack"]
@@ -1337,10 +1358,10 @@ uuid = "46d2c3a1-f734-5fdb-9937-b9b9aeba4221"
 version = "0.2.2"
 
 [[deps.MultivariateStats]]
-deps = ["Arpack", "LinearAlgebra", "SparseArrays", "Statistics", "StatsBase"]
-git-tree-sha1 = "6d019f5a0465522bbfdd68ecfad7f86b535d6935"
+deps = ["Arpack", "LinearAlgebra", "SparseArrays", "Statistics", "StatsAPI", "StatsBase"]
+git-tree-sha1 = "7008a3412d823e29d370ddc77411d593bd8a3d03"
 uuid = "6f286f6a-111f-5878-ab1e-185364afe411"
-version = "0.9.0"
+version = "0.9.1"
 
 [[deps.NLSolversBase]]
 deps = ["DiffResults", "Distributed", "FiniteDiff", "ForwardDiff"]
@@ -1371,6 +1392,11 @@ deps = ["Combinatorics", "DataStructures", "DelimitedFiles", "InvertedIndices", 
 git-tree-sha1 = "2fd5787125d1a93fbe30961bd841707b8a80d75b"
 uuid = "86f7a689-2022-50b4-a561-43c23ac3c673"
 version = "0.9.6"
+
+[[deps.NamedTupleTools]]
+git-tree-sha1 = "63831dcea5e11db1c0925efe5ef5fc01d528c522"
+uuid = "d9ec5142-1e00-5aa0-9d6a-321866360f50"
+version = "0.13.7"
 
 [[deps.NaturalSort]]
 git-tree-sha1 = "eda490d06b9f7c00752ee81cfa451efe55521e21"
@@ -1472,6 +1498,12 @@ deps = ["LinearAlgebra", "SparseArrays", "SuiteSparse"]
 git-tree-sha1 = "cf494dca75a69712a72b80bc48f59dcf3dea63ec"
 uuid = "90014a1f-27ba-587c-ab20-58faa44d9150"
 version = "0.11.16"
+
+[[deps.PairPlots]]
+deps = ["Measures", "NamedTupleTools", "Printf", "RecipesBase", "Statistics", "StatsBase", "Tables"]
+git-tree-sha1 = "b49fc32c74710a8fa62d3ce46cd689c98d01ada1"
+uuid = "43a3c2be-4208-490b-832a-a21dcd55d7da"
+version = "0.1.0"
 
 [[deps.Parameters]]
 deps = ["OrderedCollections", "UnPack"]
@@ -1724,9 +1756,9 @@ version = "0.1.0"
 
 [[deps.SLEEFPirates]]
 deps = ["IfElse", "Static", "VectorizationBase"]
-git-tree-sha1 = "75bc1fdf64ad0825b063ab64c6cd11fe8317fae8"
+git-tree-sha1 = "7ee0e13ac7cd77f2c0e93bff8c40c45f05c77a5a"
 uuid = "476501e8-09a2-5ece-8869-fb82de89a1fa"
-version = "0.6.34"
+version = "0.6.33"
 
 [[deps.SciMLBase]]
 deps = ["ArrayInterfaceCore", "CommonSolve", "ConstructionBase", "Distributed", "DocStringExtensions", "FunctionWrappersWrappers", "IteratorInterfaceExtensions", "LinearAlgebra", "Logging", "Markdown", "RecipesBase", "RecursiveArrayTools", "StaticArraysCore", "Statistics", "Tables"]
@@ -1846,9 +1878,9 @@ uuid = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 
 [[deps.StatsAPI]]
 deps = ["LinearAlgebra"]
-git-tree-sha1 = "f9af7f195fb13589dd2e2d57fdb401717d2eb1f6"
+git-tree-sha1 = "8d7530a38dbd2c397be7ddd01a424e4f411dcc41"
 uuid = "82ae8749-77ed-4fe6-ae5f-f523153014b0"
-version = "1.5.0"
+version = "1.2.2"
 
 [[deps.StatsBase]]
 deps = ["DataAPI", "DataStructures", "LinearAlgebra", "LogExpFunctions", "Missings", "Printf", "Random", "SortingAlgorithms", "SparseArrays", "Statistics", "StatsAPI"]
@@ -2308,6 +2340,7 @@ version = "1.4.1+0"
 # ╠═bc639dd7-9368-4274-a6b4-e51ada87f50e
 # ╠═99c09218-2034-4a80-b217-6b69362817a9
 # ╠═071c0701-f4d5-4a0c-b30c-aa1ff0dc58bf
+# ╠═1b0cfbae-d773-4d65-b276-1790e230338e
 # ╠═dfa1be06-2401-4dbe-8ead-80376cf2f810
 # ╠═b7208863-cdcb-4017-a33f-2df443251a8d
 # ╠═74d28ef3-dc80-4d63-b412-0b7e6e1184c9
@@ -2318,8 +2351,13 @@ version = "1.4.1+0"
 # ╠═842efcbf-6eac-49a2-a56c-84a971bba879
 # ╠═05d71dbf-da84-4831-b628-8637abd6d7d6
 # ╠═c75ba8a4-c232-473b-9945-0c9475ad99b0
-# ╟─3c1e6ec5-fe21-4b5d-a1e1-9eef7e0453b0
+# ╠═4e526c95-b9a0-4004-8600-984eb1c9b953
+# ╠═3c1e6ec5-fe21-4b5d-a1e1-9eef7e0453b0
+# ╠═63a6be96-5b8d-4aa8-b13d-a8fa14bab280
+# ╠═00dbca2e-a00a-43db-b215-d1e3d79a37d2
+# ╠═503b98d1-34ca-4627-abdc-56670e531f3a
+# ╠═f2d21735-e282-4883-b237-4c3451ea6c8e
 # ╠═e936ece1-ebf0-48ca-9676-9de00714c7f3
-# ╠═bfa3563f-8deb-40d6-9fbf-4189197ff2dc
+# ╠═5ed6f1fb-2c70-4f6f-af8f-f43a7a0f9607
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
