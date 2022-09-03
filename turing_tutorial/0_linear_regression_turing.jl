@@ -45,6 +45,8 @@ using LinearSolve
 # ╔═╡ 98f07d48-be49-45b9-9c0e-69d12a7332a2
 # following this guy
 # https://turing.ml/v0.21/tutorials/05-linear-regression/
+# this is helpful as well. 
+# https://turing.ml/v0.21/docs/using-turing/guide
 
 
 # ╔═╡ 0bb9f72b-9ac4-4d18-b5c9-0130b5d3afdf

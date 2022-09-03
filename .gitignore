@@ -1,2 +1,5 @@
-*.ipynb*
+*.msh
+*.vtk
+*.vtu
+*.ipynb
 *.csv
