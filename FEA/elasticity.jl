@@ -5,7 +5,7 @@ using GridapGmsh
 model = GmshDiscreteModel("mesh3D_v2.msh")
 
 
-order = 1
+order = 2
 
 reffe = ReferenceFE(lagrangian,VectorValue{3,Float64},order)
 V0 = TestFESpace(model,reffe;
