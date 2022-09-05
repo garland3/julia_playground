@@ -1,6 +1,6 @@
 # %%
 import os
-import pygmsh
+# import pygmsh
 import gmsh
 # %%
 # mesh_size = 0.4

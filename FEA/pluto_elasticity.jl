@@ -10,6 +10,15 @@ begin
 	using GridapGmsh
 end
 
+# ╔═╡ c51b025b-0dba-44d5-a30a-99e6e13505a7
+md"""
+# FEA
+* Testing out how easy or hard it is to run FEA in julia
+* in WSL, I made a python conda env
+  * named it `fea`
+  * ran the code `testing_gmsh_v2.py`
+"""
+
 # ╔═╡ e802c9be-318e-4621-97ed-772e4b5432aa
 model = GmshDiscreteModel("mesh3D_v2.msh")
 
@@ -84,7 +93,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.8.0"
 manifest_format = "2.0"
-project_hash = "bcca932af3c9c01e44f36bb4893a57188cdc8a96"
+project_hash = "ce2e3b9ce71c4a6799f76a42542eac037a1dea5b"
 
 [[deps.AbstractFFTs]]
 deps = ["ChainRulesCore", "LinearAlgebra"]
@@ -982,6 +991,7 @@ version = "17.4.0+0"
 """
 
 # ╔═╡ Cell order:
+# ╠═c51b025b-0dba-44d5-a30a-99e6e13505a7
 # ╠═75b5fc60-2b12-11ed-2865-2d99ed783003
 # ╠═e802c9be-318e-4621-97ed-772e4b5432aa
 # ╠═feb48220-169e-4938-9ed0-5ecddc275003
